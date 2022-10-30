@@ -45,3 +45,13 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Atendee {
+  id    String @id @default(cuid())
+  name  String
+  email String
+  phone String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
