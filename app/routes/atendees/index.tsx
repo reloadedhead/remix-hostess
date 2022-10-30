@@ -1,7 +1,8 @@
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
+import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
 
-import { getAtendees } from "~/models/atendee.server";
+import { Atendee, getAtendees } from "~/models/atendee.server";
 import Card from "~/components/card";
 
 type LoaderData = {
@@ -14,6 +15,18 @@ export const loader = async () => {
 
 export default function AtendeesIndex() {
   const { atendees } = useLoaderData<LoaderData>();
+
+  const shareAtendee =
+    (atendee: Omit<Atendee, "createdAt" | "updatedAt" | "id">) => async () => {
+      try {
+        if (navigator) {
+          /** Should share a vCard instead! */
+          await navigator.share({ text: `${atendee.name}, ${atendee.email}` });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
   return (
     <Card>
       <table className="w-full table-auto border-collapse text-sm">
@@ -28,6 +41,7 @@ export default function AtendeesIndex() {
             <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200">
               Phone number
             </th>
+            <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200"></th>
           </tr>
         </thead>
         <tbody className="bg-white dark:bg-slate-800">
@@ -41,6 +55,20 @@ export default function AtendeesIndex() {
               </td>
               <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
                 <a href={`tel:${atendee.phone}`}>{atendee.phone}</a>
+              </td>
+              <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                <div className="flex space-x-2">
+                  <Link to={atendee.id}>
+                    <EyeIcon className="h-5 w-5 dark:stroke-slate-100" />
+                  </Link>
+                  <button
+                    aria-label="share"
+                    type="button"
+                    onClick={shareAtendee(atendee)}
+                  >
+                    <ShareIcon className="h-5 w-5 dark:stroke-slate-100" />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
