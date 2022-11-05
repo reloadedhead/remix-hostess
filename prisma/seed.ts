@@ -41,8 +41,18 @@ async function seed() {
   });
 
   const atendees = [
-    { name: "John Doe", email: "jdoe@mail.com", phone: "+491231234567" },
-    { name: "Jane Doe", email: "jane_doe@mail.com", phone: "+491231234567" },
+    {
+      name: "John Doe",
+      email: "jdoe@mail.com",
+      phone: "+491231234567",
+      checkedInAt: null,
+    },
+    {
+      name: "Jane Doe",
+      email: "jane_doe@mail.com",
+      phone: "+491231234567",
+      checkedInAt: null,
+    },
   ];
 
   for (const atendee of atendees) {

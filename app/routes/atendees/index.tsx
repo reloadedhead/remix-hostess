@@ -7,6 +7,7 @@ import { getAtendees } from "~/models/atendee.server";
 import type { Atendee } from "~/models/atendee.server";
 import Card from "~/components/card";
 import Main from "~/components/main";
+import CheckIn from "./$id/check-in";
 
 type LoaderData = {
   atendees: Awaited<ReturnType<typeof getAtendees>>;
@@ -20,7 +21,10 @@ export default function AtendeesIndex() {
   const { atendees } = useLoaderData<LoaderData>();
 
   const shareAtendee =
-    (atendee: Omit<Atendee, "createdAt" | "updatedAt" | "id">) => async () => {
+    (
+      atendee: Omit<Atendee, "createdAt" | "updatedAt" | "id" | "checkedInAt">
+    ) =>
+    async () => {
       try {
         if (navigator) {
           const card = vCard();
@@ -56,6 +60,9 @@ export default function AtendeesIndex() {
               <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200">
                 Phone number
               </th>
+              <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200">
+                Has checked in?
+              </th>
               <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200"></th>
             </tr>
           </thead>
@@ -70,6 +77,9 @@ export default function AtendeesIndex() {
                 </td>
                 <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
                   <a href={`tel:${atendee.phone}`}>{atendee.phone}</a>
+                </td>
+                <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                  {atendee.checkedInAt ? "Yes" : <CheckIn id={atendee.id} />}
                 </td>
                 <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
                   <div className="flex space-x-2">
