@@ -13,9 +13,9 @@ export default function Card({
   action?: ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
+    <div className="rounded-lg border border-gray-200 bg-white p-6  shadow-md dark:border-gray-700 dark:bg-gray-800">
       {title && (
-        <div className="flex flex-row items-center justify-between">
+        <div className="mb-2 flex flex-row items-center justify-between">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {title}
           </h5>
