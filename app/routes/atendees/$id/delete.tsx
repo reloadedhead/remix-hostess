@@ -3,13 +3,13 @@ import { Form, useTransition } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import type { ActionFunction } from "@remix-run/node";
-import { checkIn } from "~/models/atendee.server";
-import Button from "~/components/button";
+import { deleteAtendee } from "~/models/atendee.server";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
 export const action: ActionFunction = async ({ params }) => {
   invariant(params.id);
 
-  await checkIn(params.id, new Date());
+  await deleteAtendee(params.id);
 
   return redirect(`atendees`);
 };
@@ -18,15 +18,15 @@ type Props = {
   id: string;
 };
 
-export default function CheckIn({ id }: Props) {
+export default function DeleteAtendee({ id }: Props) {
   const transition = useTransition();
   const isCheckingIn = Boolean(transition.submission);
 
   return (
-    <Form method="post" action={`${id}/check-in`}>
-      <Button variant="secondary" type="submit" disabled={isCheckingIn}>
-        {isCheckingIn ? "Checking in..." : "Check in now"}
-      </Button>
+    <Form method="post" action={`${id}/delete`}>
+      <button title="Delete" type="submit" disabled={isCheckingIn}>
+        <TrashIcon className="h-5 w-5 dark:stroke-slate-100" />
+      </button>
     </Form>
   );
 }

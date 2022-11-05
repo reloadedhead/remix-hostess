@@ -8,6 +8,7 @@ import type { Atendee } from "~/models/atendee.server";
 import Card from "~/components/card";
 import Main from "~/components/main";
 import CheckIn from "./$id/check-in";
+import DeleteAtendee from "./$id/delete";
 
 type LoaderData = {
   atendees: Awaited<ReturnType<typeof getAtendees>>;
@@ -94,6 +95,7 @@ export default function AtendeesIndex() {
                       >
                         <ShareIcon className="h-5 w-5 dark:stroke-slate-100" />
                       </button>
+                      <DeleteAtendee id={atendee.id} />
                     </div>
                   </td>
                 </tr>

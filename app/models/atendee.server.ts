@@ -24,3 +24,7 @@ export function createAtendee(data: Pick<Atendee, "name" | "phone" | "email">) {
 export function checkIn(id: string, checkedInAt: Date) {
   return prisma.atendee.update({ where: { id }, data: { checkedInAt } });
 }
+
+export function deleteAtendee(id: string) {
+  return prisma.atendee.delete({ where: { id } });
+}
