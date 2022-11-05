@@ -2,9 +2,10 @@ import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
 
-import { Atendee, getAtendees } from "~/models/atendee.server";
+import { getAtendees } from "~/models/atendee.server";
+import type { Atendee } from "~/models/atendee.server";
 import Card from "~/components/card";
-import Main from "~/components/Main";
+import Main from "~/components/main";
 
 type LoaderData = {
   atendees: Awaited<ReturnType<typeof getAtendees>>;
@@ -30,7 +31,7 @@ export default function AtendeesIndex() {
     };
   return (
     <Main>
-      <Card>
+      <Card title="Atendees" action={<Link to="new">New</Link>}>
         <table className="w-full table-auto border-collapse text-sm">
           <thead>
             <tr>
