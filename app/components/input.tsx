@@ -4,7 +4,7 @@ import cn from "classnames";
 type Props = {
   label: ReactNode;
   adornment?: ReactNode;
-  error?: string;
+  error?: string | null;
 } & HTMLProps<HTMLInputElement>;
 
 export default function Input({ label, adornment, error, ...rest }: Props) {
