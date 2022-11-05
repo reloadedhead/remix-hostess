@@ -1,6 +1,7 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { EyeIcon, ShareIcon } from "@heroicons/react/24/outline";
+import vCard from "vcards-js";
 
 import { getAtendees } from "~/models/atendee.server";
 import type { Atendee } from "~/models/atendee.server";
@@ -22,8 +23,19 @@ export default function AtendeesIndex() {
     (atendee: Omit<Atendee, "createdAt" | "updatedAt" | "id">) => async () => {
       try {
         if (navigator) {
-          /** Should share a vCard instead! */
-          await navigator.share({ text: `${atendee.name}, ${atendee.email}` });
+          const card = vCard();
+          card.formattedName = atendee.name;
+          card.email = atendee.email;
+          card.cellPhone = atendee.phone;
+
+          await navigator.share({
+            files: [
+              new File(
+                [new Blob([card.getFormattedString()])],
+                `${atendee.name}.vcf`
+              ),
+            ],
+          });
         }
       } catch (error) {
         console.log(error);

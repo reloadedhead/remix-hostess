@@ -41,7 +41,8 @@
     "isbot": "^3.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tiny-invariant": "^1.2.0"
+    "tiny-invariant": "^1.2.0",
+    "vcards-js": "^2.10.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.5.0",
@@ -57,6 +58,7 @@
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
+    "@types/vcards-js": "^2.10.2",
     "@vitejs/plugin-react": "^2.1.0",
     "@vitest/coverage-c8": "^0.23.4",
     "autoprefixer": "^10.4.11",
