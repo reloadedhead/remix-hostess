@@ -20,11 +20,13 @@ export default function Button({
   startIcon,
   children,
   variant = "primary",
+  type = "button",
   ...rest
 }: Props) {
   return (
     <button
       {...rest}
+      type={type}
       disabled={disabled}
       className={cn(
         "rounded-md py-2 px-3 text-[0.8125rem] font-semibold leading-5 text-white focus:outline-none",
