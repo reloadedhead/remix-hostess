@@ -1,6 +1,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useNavigate } from "@remix-run/react";
 import { json } from "@remix-run/server-runtime";
+import cn from "classnames";
 
 import Card from "~/components/card";
 import Main from "~/components/main";
@@ -15,6 +16,10 @@ export const loader = async () =>
 
 export default function Tables() {
   const { tables } = useLoaderData<LoaderData>();
+  const navigate = useNavigate();
+
+  const handleAddAtendee = (tableId: string) => () =>
+    navigate(`${tableId}/add-atendee`);
   return (
     <Main>
       <Card title="Tables">
@@ -32,26 +37,40 @@ export default function Tables() {
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-gray-800">
-              {tables.map((table) => (
-                <tr key={`row-${table.id}`}>
-                  <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
-                    {table.name}
-                  </td>
-                  <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
-                    {table.capacity - table.atendees.length}
-                  </td>
-                  <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
-                    <div className="flex space-x-2">
-                      <Link to={`${table.id}/add-atendee`}>
-                        <PlusCircleIcon
-                          title="Add atendee"
-                          className="h-5 w-5 cursor-pointer dark:stroke-slate-100"
-                        />
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {tables.map((table) => {
+                const isFull = table.atendees.length === table.capacity;
+
+                return (
+                  <tr key={`row-${table.id}`}>
+                    <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                      {table.name}
+                    </td>
+                    <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                      {table.capacity - table.atendees.length} seats available
+                    </td>
+                    <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                      <div className="flex space-x-2">
+                        <button
+                          disabled={isFull}
+                          type="button"
+                          title="Table is full"
+                          onClick={handleAddAtendee(table.id)}
+                        >
+                          <PlusCircleIcon
+                            className={cn(
+                              "h-5",
+                              "w-5",
+                              isFull
+                                ? "dark:stroke-slate-400"
+                                : "dark:stroke-slate-100"
+                            )}
+                          />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
