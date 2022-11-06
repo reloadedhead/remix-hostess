@@ -31,6 +31,12 @@ export function deleteAtendee(id: string) {
 
 export function searchAtendees(query: string) {
   return prisma.atendee.findMany({
-    where: { OR: { name: { contains: query }, email: { contains: query } } },
+    where: {
+      OR: {
+        name: { contains: query },
+        email: { contains: query },
+        tableId: null,
+      },
+    },
   });
 }
