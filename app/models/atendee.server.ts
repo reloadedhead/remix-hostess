@@ -28,3 +28,9 @@ export function checkIn(id: string, checkedInAt: Date) {
 export function deleteAtendee(id: string) {
   return prisma.atendee.delete({ where: { id } });
 }
+
+export function searchAtendees(query: string) {
+  return prisma.atendee.findMany({
+    where: { OR: { name: { contains: query }, email: { contains: query } } },
+  });
+}
