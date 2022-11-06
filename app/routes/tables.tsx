@@ -1,5 +1,5 @@
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { Outlet, useLoaderData, useNavigate } from "@remix-run/react";
+import { PlusCircleIcon, UserIcon } from "@heroicons/react/24/outline";
+import { Link, Outlet, useLoaderData, useNavigate } from "@remix-run/react";
 import { json } from "@remix-run/server-runtime";
 import cn from "classnames";
 
@@ -33,6 +33,9 @@ export default function Tables() {
                 <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200">
                   Availability
                 </th>
+                <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200">
+                  Atendees
+                </th>
                 <th className="border-b p-4 pl-8 pt-0 pb-3 text-left font-medium text-slate-400 dark:border-slate-600 dark:text-slate-200"></th>
               </tr>
             </thead>
@@ -48,6 +51,21 @@ export default function Tables() {
                     <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
                       {table.capacity - table.atendees.length} seats available
                     </td>
+
+                    <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                      <div className="flex space-x-2">
+                        <ul className="list-disc">
+                          {table.atendees.map((atendee) => (
+                            <li key={`UserItem-${atendee.id}`}>
+                              <Link to={`/atendees/${atendee.id}`}>
+                                {atendee.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </td>
+
                     <td className="border-b border-slate-100 p-4 pl-8 text-slate-500 dark:border-slate-700 dark:text-slate-400">
                       <div className="flex space-x-2">
                         <button
